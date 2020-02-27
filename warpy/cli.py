@@ -16,6 +16,18 @@ class WarpPlus:
         public_key = crypto_scalarmult_base(private_key)
         return b64encode(private_key).decode('utf-8'), b64encode(public_key).decode('utf-8')
 
+    def enable_warp(self, config):
+        data = {"warp_enabled": True}
+        url = 'https://api.cloudflareclient.com/v0a745/reg/' + config['id']
+        headers = {"Accept-Encoding": "gzip",
+                   "User-Agent": "okhttp/3.12.1",
+                   "Authorization": "Bearer {}".format(config['token']),
+                   "Content-Type": "application/json; charset=UTF-8"}
+        req = requests.patch(url, json=data, headers=headers)
+        req.raise_for_status()
+        req = req.json()
+        assert req["warp_enabled"] is True
+
     def register(self, key=None, referrer=None):
 
         url = 'https://api.cloudflareclient.com/v0a745/reg'
@@ -41,7 +53,7 @@ class WarpPlus:
         if req.status_code != 200:
             return {}
         req_json = dict(req.json())
-        req_json['key'] = {"public_key": key[1], "private_key": key[0]}
+        req_json['key'] = {"public_key": req_json['config']['peers'][0]['public_key'], "private_key": key[0]}
         return req_json
 
     @staticmethod
