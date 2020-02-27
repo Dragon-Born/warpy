@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(name='WARP+ to WireGuard',
-      version='0.4',
+      version='0.5',
       description='A simple cli to get WARP+ as WireGuard configuration',
-      url='https://git.arian.lol/warp-plus/python',
+      url='https://github.com/warp-plus/warpy-python',
       author='Arian Amiramjadi',
       author_email='me@arian.lol',
       packages=['warpy'],
