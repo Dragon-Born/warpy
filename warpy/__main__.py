@@ -166,7 +166,7 @@ def register():
     reg = warp_plus.register(warp_plus.generate_key())
     save_config(user, reg)
     print(warp_plus.export_to_wireguard(reg))
-
+    warp_plus.increase_quota(reg)
 
 def init():
     invalid = False
