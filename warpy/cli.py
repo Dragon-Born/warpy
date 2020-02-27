@@ -50,8 +50,7 @@ class WarpPlus:
                 "locale": "en-GB"}
 
         req = requests.post(url, headers=headers, json=data)
-        if req.status_code != 200:
-            return {}
+        response.raise_for_status()
         req_json = dict(req.json())
         req_json['key'] = {"public_key": req_json['config']['peers'][0]['public_key'], "private_key": key[0]}
         return req_json
@@ -61,8 +60,7 @@ class WarpPlus:
         url = 'https://api.cloudflareclient.com/v0i1909221500/reg/' + ID.strip()
         headers = {"Authorization": "Bearer " + token.strip()}
         req = requests.get(url, headers=headers)
-        if req.status_code != 200:
-            raise Exception(req.text)
+        response.raise_for_status()
         return req.json()
 
     @staticmethod
