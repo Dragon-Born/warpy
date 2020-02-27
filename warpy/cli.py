@@ -50,7 +50,7 @@ class WarpPlus:
                 "locale": "en-GB"}
 
         req = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()
+        req.raise_for_status()
         req_json = dict(req.json())
         req_json['key'] = {"public_key": req_json['config']['peers'][0]['public_key'], "private_key": key[0]}
         return req_json
