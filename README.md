@@ -6,7 +6,7 @@
 ## INSTALLATION
 To install it right away for all UNIX users (Linux, macOS, etc.), type:
 
-    pip3 install git+https://git.arian.lol/warp-plus/python
+    pip3 install git+https://git.arian.lol/warp-plus/warpy-python
    
 ## How to use
 By using this, you agree the [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/) and [Terms of Service](https://www.cloudflare.com/application/terms/) of Cloudflare 1.1.1.1
