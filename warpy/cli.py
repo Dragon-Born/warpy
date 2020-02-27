@@ -68,7 +68,7 @@ class WarpPlus:
     @staticmethod
     def export_to_wireguard(config):
         conf_text = conf.format(private_key=config['key']['private_key'],
-                                public_key=config['key']['public_key'],
+                                public_key=config['config']['peers'][0]['public_key'],
                                 address=config['config']['interface']['addresses']['v4'],
                                 endpoint=config['config']['peers'][0]['endpoint']['host'])
         return conf_text
