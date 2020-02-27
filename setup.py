@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='WARP+ to WireGuard',
-      version='0.201',
+      version='0.202',
       description='A simple cli to get WARP+ as WireGuard configuration',
       url='https://git.arian.lol/warp-plus/python',
       author='Arian Amiramjadi',
