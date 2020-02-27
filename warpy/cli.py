@@ -60,7 +60,7 @@ class WarpPlus:
         url = 'https://api.cloudflareclient.com/v0i1909221500/reg/' + ID.strip()
         headers = {"Authorization": "Bearer " + token.strip()}
         req = requests.get(url, headers=headers)
-        response.raise_for_status()
+        req.raise_for_status()
         return req.json()
 
     @staticmethod
