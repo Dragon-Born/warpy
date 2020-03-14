@@ -26,13 +26,13 @@ def increase_user_quota(config, user):
     print("\nWait until the end, Do not close the script!")
     quota = int(_input)
     while counter != quota:
+        if counter != quota and counter % 3 == 0 and counter != 0:
+            print("300 seconds sleep..., (Do not close the script)")
+            sleep(300)
         increase = warp_plus.increase_quota(config)
         if not increase:
-            print("60 seconds sleep..., (Do not close the script)")
-            sleep(60)
-        elif counter != quota and counter % 3 == 0 and counter != 0:
-            print("60 seconds sleep..., (Do not close the script)")
-            sleep(60)
+            print("300 seconds sleep..., (Do not close the script)")
+            sleep(300)
         print("+1GB Added")
         counter += 1
         sleep(1)
