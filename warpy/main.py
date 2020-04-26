@@ -54,7 +54,6 @@ class WarpPlus:
                 "type": "Android",
                 "locale": "en_US"}
         req = session.post(url, headers=headers, json=data)
-        print(req.content)
         if req.status_code != 200:
             return {}
         req_json = dict(req.json())
