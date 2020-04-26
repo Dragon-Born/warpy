@@ -1,1 +1,1 @@
-from warpy.cli import WarpPlus
+from warpy.main import WarpPlus

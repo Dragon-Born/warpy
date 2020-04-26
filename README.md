@@ -1,4 +1,4 @@
-# Warpy
+# WARPY
 
 **Warpy** is a command-line program to get [WARP+](https://blog.cloudflare.com/announcing-warp-plus/) as [WireGuard](https://www.wireguard.com/) configuration
 
