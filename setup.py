@@ -7,7 +7,7 @@ with open(path.join(current_dir, 'README.md')) as f:
     description = f.read()
 
 setup(name='warpy',
-      version='0.7.3',
+      version='0.7.5',
       long_description=description,
       long_description_content_type='text/markdown',
       description='A simple cli to get WARP+ as WireGuard configuration',

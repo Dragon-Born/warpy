@@ -1,5 +1,6 @@
 import datetime
 import os
+import ssl
 from base64 import b64encode
 
 import requests
@@ -10,7 +11,8 @@ from warpy.utils import generate_string, conf, TlsAdapter
 api_version = "v0a884"
 
 session = requests.session()
-session.mount("https://", TlsAdapter())
+adapter = TlsAdapter()
+session.mount("https://", adapter)
 
 
 class WarpPlus:
@@ -37,8 +39,7 @@ class WarpPlus:
 
         url = 'https://api.cloudflareclient.com/' + api_version + '/reg'
 
-        headers = {"Accept-Encoding": "gzip",
-                   "User-Agent": "okhttp/3.12.1",
+        headers = {"User-Agent": "okhttp/3.12.1",
                    "Content-Type": "application/json; charset=UTF-8"}
 
         install_id = generate_string(11)
@@ -52,7 +53,8 @@ class WarpPlus:
                 "model": "",
                 "type": "Android",
                 "locale": "en_US"}
-        req = session.request('POST', url, headers=headers, json=data)
+        req = session.post(url, headers=headers, json=data)
+        print(req.content)
         if req.status_code != 200:
             return {}
         req_json = dict(req.json())

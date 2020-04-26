@@ -28,7 +28,8 @@ class TlsAdapter(HTTPAdapter):
         super(TlsAdapter, self).__init__(**kwargs)
 
     def init_poolmanager(self, *pool_args, **pool_kwargs):
-        ctx = ssl_.create_urllib3_context(ciphers=CIPHERS, cert_reqs=ssl.CERT_REQUIRED, options=self.ssl_options)
+        ctx = ssl_.create_urllib3_context(ciphers=CIPHERS, cert_reqs=ssl.CERT_REQUIRED, options=self.ssl_options,
+                                          ssl_version=ssl.PROTOCOL_TLSv1_1)
         self.poolmanager = PoolManager(*pool_args,
                                        ssl_context=ctx,
                                        **pool_kwargs)
