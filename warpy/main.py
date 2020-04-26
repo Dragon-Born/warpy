@@ -5,7 +5,12 @@ from base64 import b64encode
 import requests
 from nacl.bindings import crypto_scalarmult_base
 
-from warpy.utils import generate_string, conf
+from warpy.utils import generate_string, conf, TlsAdapter
+
+api_version = "v0a884"
+
+session = requests.session()
+session.mount("https://", TlsAdapter())
 
 
 class WarpPlus:
@@ -18,49 +23,49 @@ class WarpPlus:
 
     def enable_warp(self, config):
         data = {"warp_enabled": True}
-        url = 'https://api.cloudflareclient.com/v0a745/reg/' + config['id']
+        url = 'https://api.cloudflareclient.com/' + api_version + '/reg/' + config['id']
         headers = {"Accept-Encoding": "gzip",
                    "User-Agent": "okhttp/3.12.1",
                    "Authorization": "Bearer {}".format(config['token']),
                    "Content-Type": "application/json; charset=UTF-8"}
-        req = requests.patch(url, json=data, headers=headers)
+        req = session.request("PATCH", url, json=data, headers=headers)
         req.raise_for_status()
         req = req.json()
         assert req["warp_enabled"] is True
 
     def register(self, key=None, referrer=None):
 
-        url = 'https://api.cloudflareclient.com/v0a745/reg'
+        url = 'https://api.cloudflareclient.com/' + api_version + '/reg'
 
-        headers = {'Content-Type': 'application/json; charset=UTF-8',
-                   'Host': 'api.cloudflareclient.com',
-                   'Connection': 'Keep-Alive',
-                   'Accept-Encoding': 'gzip',
-                   'User-Agent': 'okhttp/3.12.1'}
+        headers = {"Accept-Encoding": "gzip",
+                   "User-Agent": "okhttp/3.12.1",
+                   "Content-Type": "application/json; charset=UTF-8"}
 
         install_id = generate_string(11)
         key = key if key else self.generate_key()
         data = {"key": key[1],
-                "install_id": install_id,
-                "fcm_token": "{}:APA91b{}".format(install_id, generate_string(134)),
+                "install_id": "",
+                "fcm_token": "",
                 "referrer": referrer or "",
                 "warp_enabled": True,
-                "tos": datetime.datetime.now().isoformat()[:-3] + "+07:00",
+                "tos": datetime.datetime.now().isoformat()[:-7] + "Z",
+                "model": "",
                 "type": "Android",
-                "locale": "en-GB"}
-
-        req = requests.post(url, headers=headers, json=data)
-        req.raise_for_status()
+                "locale": "en_US"}
+        req = session.request('POST', url, headers=headers, json=data)
+        if req.status_code != 200:
+            return {}
         req_json = dict(req.json())
         req_json['key'] = {"public_key": req_json['config']['peers'][0]['public_key'], "private_key": key[0]}
         return req_json
 
     @staticmethod
     def get_info(ID, token):
-        url = 'https://api.cloudflareclient.com/v0i1909221500/reg/' + ID.strip()
+        url = 'https://api.cloudflareclient.com/' + api_version + '/reg/' + ID.strip()
         headers = {"Authorization": "Bearer " + token.strip()}
-        req = requests.get(url, headers=headers)
-        req.raise_for_status()
+        req = session.request("GET", url, headers=headers)
+        if req.status_code != 200:
+            raise Exception(req.text)
         return req.json()
 
     @staticmethod

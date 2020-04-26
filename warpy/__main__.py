@@ -57,8 +57,8 @@ def show_user_info(config):
     info = warp_plus.get_info(config["id"], config["token"])
     text = '\nID: {}\n'.format(config['id'])
     text += "Public Key: {}\n".format(config['key']['public_key'])
-    text += "Account Type: {}\n".format(info['result']['account']['account_type'])
-    text += "Quota: {}GB".format(round(int(info['result']['account']['quota']) / (10 ** 9), 2))
+    text += "Account Type: {}\n".format(info['account']['account_type'])
+    text += "Quota: {}GB".format(round(int(info['account']['quota']) / (10 ** 9), 2))
     print(text)
 
 
@@ -168,7 +168,8 @@ def register():
     print(warp_plus.export_to_wireguard(reg))
     warp_plus.increase_quota(reg)
 
-def init():
+
+def main():
     invalid = False
     _input = None
     show_menu()
@@ -205,4 +206,5 @@ def init():
             show_menu()
 
 
-init()
+if __name__ == '__main__':
+    main()
