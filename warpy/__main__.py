@@ -8,7 +8,7 @@ import os
 import re
 import json
 
-from warpy.cli import WarpPlus
+from warpy.main import WarpPlus
 from warpy.utils import Colored
 
 warp_plus = WarpPlus()
