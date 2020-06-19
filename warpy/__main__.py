@@ -91,7 +91,10 @@ def user_details(file_name):
 
 
 def show_users(remove=False):
-    dir_files = [i for i in os.listdir(config_dir) if i.endswith(".json")]
+    try:
+        dir_files = [i for i in os.listdir(config_dir) if i.endswith(".json")]
+    except FileNotFoundError:
+        os.mkdir(config_dir)
     print("\n{}List of Users:{}".format(Colored.YELLOW, Colored.ENDC))
     if not dir_files:
         print("Empty\n")
